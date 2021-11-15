@@ -1,0 +1,52 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Exchange Rates controller",
+        "version": "0.1"
+    },
+    "paths": {
+        "/set-current-currency": {
+            "post": {
+                "summary": "Sets current currency",
+                "description": "Sets current currency",
+                "operationId": "d730e0fa8d35fc1a3889d73860732d37",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/get-current-currency": {
+            "get": {
+                "summary": "Get current currency",
+                "description": "Get current currency",
+                "operationId": "a81431b014d104ddbc0780a25ccd0f9a",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}
