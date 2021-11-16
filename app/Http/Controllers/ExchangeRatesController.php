@@ -7,9 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Services\CurrencyService;
 
-/**
- * @OA\Info(title="Exchange Rates controller", version="0.1")
- */
 class ExchangeRatesController extends Controller
 {
     public function getCurrenciesTwoYearsHistory(Request $request)
@@ -33,10 +30,40 @@ class ExchangeRatesController extends Controller
         return $currencyService->getCurrenciesDataByDateRange();
     }
 
-    public function getTodayNewData(Request $request)
+    /**
+     * @OA\Get(
+     *      path="/api/get-newest-data",
+     *      summary="Get newest data",
+     *      description="Get newest data",
+     *      @OA\Parameter(
+     *          name="currentCurrency",
+     *          description="Current currency",
+     *          required=false,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(
+     *          response=422, 
+     *          description="Bad currency"
+     *      ),
+     *     )
+     *
+     *
+     */
+    public function getTodayNewData(Request $request = null, $staticCurrency = null)
     {
+        $currency = '';
+        if (!$request) {
+            $currency = $staticCurrency;
+        }
         $currencyService = new CurrencyService();
-        $currencyService->setCurrentCurrency($request->input('currentCurrency'));
+        $currencyService->setCurrentCurrency($currency);
         $currencyService->urlWildcardBuilder();
         $currencyService->setStartPeriod(Carbon::now()->format('Y-m-d'));
         $currencyService->setApiParams();

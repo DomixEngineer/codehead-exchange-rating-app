@@ -1,48 +1,119 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Exchange Rates controller",
+        "title": "Exchange Rates service",
         "version": "0.1"
     },
     "paths": {
-        "/set-current-currency": {
-            "post": {
-                "summary": "Sets current currency",
-                "description": "Sets current currency",
-                "operationId": "d730e0fa8d35fc1a3889d73860732d37",
+        "/api/get-newest-data": {
+            "get": {
+                "summary": "Get newest data",
+                "description": "Get newest data",
+                "operationId": "01351a63d0657e53c3af3686177a91fd",
+                "parameters": [
+                    {
+                        "name": "currentCurrency",
+                        "in": "path",
+                        "description": "Current currency",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation"
                     },
-                    "400": {
-                        "description": "Bad request"
+                    "422": {
+                        "description": "Bad currency"
                     }
-                },
-                "security": [
-                    {
-                        "api_key_security_example": []
-                    }
-                ]
+                }
             }
         },
-        "/get-current-currency": {
+        "/api/get-two-years-currencies-history": {
             "get": {
-                "summary": "Get current currency",
-                "description": "Get current currency",
-                "operationId": "a81431b014d104ddbc0780a25ccd0f9a",
+                "summary": "Get two years history",
+                "description": "Get two years history",
+                "operationId": "ad9f9d5418b90817e20f433d2f9b92ee",
+                "parameters": [
+                    {
+                        "name": "currentCurrency",
+                        "in": "path",
+                        "description": "Current currency",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "currentCurrency",
+                        "in": "path",
+                        "description": "Against currency",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation"
                     },
-                    "400": {
-                        "description": "Bad request"
+                    "422": {
+                        "description": "Bad currency"
                     }
-                },
-                "security": [
+                }
+            }
+        },
+        "/api/get-currencies-by-date-range": {
+            "get": {
+                "summary": "Get currencies by date range",
+                "description": "Get currencies by date range",
+                "operationId": "c61d1f51460302fd87d74cecc73b6306",
+                "parameters": [
                     {
-                        "api_key_security_example": []
+                        "name": "currentCurrency",
+                        "in": "path",
+                        "description": "Current currency",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "againstCurrency",
+                        "in": "path",
+                        "description": "against currency",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "startPeriod",
+                        "in": "path",
+                        "description": "start period date",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "endPeriod",
+                        "in": "path",
+                        "description": "end period date",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
                     }
-                ]
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
             }
         }
     },

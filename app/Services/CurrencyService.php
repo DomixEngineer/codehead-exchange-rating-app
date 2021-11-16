@@ -57,21 +57,7 @@ class CurrencyService
     protected $currenciesUrl = '';
 
     /**
-     * @OA\Post(
-     *      path="/api/set-current-currency",
-     *      summary="Sets current currency",
-     *      description="Sets current currency",
-     *      @OA\Response(
-     *          response=200,
-     *          description="successful operation"
-     *       ),
-     *       @OA\Response(
-     *          response=422, 
-     *          description="Bad currency"
-     *      ),
-     *     )
-     *
-     * Sets current currency
+     * setter for current currency
      */
     public function setCurrentCurrency($currency)
     {
@@ -83,6 +69,9 @@ class CurrencyService
         $this->currentCurrency = $currency;
     }
 
+    /**
+     * setter for against currency
+     */
     public function setAgainstCurrency($currency)
     {
         $currency = strtoupper($currency);
@@ -93,16 +82,25 @@ class CurrencyService
         $this->againstCurrency = $currency;
     }
 
+    /**
+     * setter for start period
+     */
     public function setStartPeriod($startPeriod)
     {
         $this->startPeriod = $startPeriod;
     }
 
+    /**
+     * setter for end period
+     */
     public function setEndPeriod($endPeriod)
     {
         $this->endPeriod = $endPeriod;
     }
 
+    /**
+     * setter for file format
+     */
     public function setFileFormat($fileFormat)
     {
         if (in_array($fileFormat, $availableFormats))
@@ -111,6 +109,9 @@ class CurrencyService
         }
     }
 
+    /**
+     * Method for settings API parameters in URL
+     */
     public function setApiParams()
     {
         $url = '?';
@@ -130,73 +131,89 @@ class CurrencyService
     }
 
     /**
-     * @OA\Get(
-     *      path="/api/get-current-currency",
-     *      summary="Get current currency",
-     *      description="Get current currency",
-     *      @OA\Response(
-     *          response=200,
-     *          description="successful operation"
-     *       ),
-     *       @OA\Response(response=400, description="Bad request"),
-     *       security={
-     *           {"api_key_security_example": {}}
-     *       }
-     *     )
-     *
-     * Get current currency
+     * Getter for current currency
      */
     public function getCurrenctCurrency()
     {
         return $this->currentCurrency;
     }
 
+    /**
+     * Getter for against currency
+     */
     public function getAgainstCurrency()
     {
         return $this->againstCurrency;
     }
 
+    /**
+     * Get available currencies
+     */
     public function getAvailableCurrencies()
     {
         return $this->availableCurrencies;
     }
 
+    /**
+     * Get URL for currencies which was created by UrlBuilder method
+     */
     public function getCurrenciesUrl()
     {
         return $this->currenciesUrl;
     }
 
+    /**
+     * Getter for start period
+     */
     public function getStartPeriod()
     {
         return $this->startPeriod;
     }
 
+    /**
+     * Getter for end period
+     */
     public function getEndPeriod()
     {
         return $this->endPeriod;
     }
 
+    /**
+     * Getter for file format
+     */
     public function getFileFormat()
     {
         return $this->fileFormat;
     }
 
+    /**
+     * Getter for API url
+     */
     public function getApiUrl()
     {
         return $this->apiUrl;
     }
 
+    /**
+     * Getter for API parameters
+     */
     public function getApiParams()
     {
         return $this->apiParams;
     }
 
+    /**
+     * URL builder when using two currencies (current measured and against)
+     */
     public function urlCurrenciesBuilder()
     {
         $url = 'D.'.$this->currentCurrency.'.'.$this->againstCurrency.'.SP00.A';
         $this->currenciesUrl = $url;
     }
 
+    /**
+     * URL builder when using only one currency (current measured)
+     */
     public function urlWildcardBuilder()
     {
         $url = 'D..'.$this->getCurrenctCurrency().'.SP00.A';
@@ -212,6 +229,41 @@ class CurrencyService
         return true;
     }
 
+    /**
+     * @OA\Get(
+     *      path="/api/get-two-years-currencies-history",
+     *      summary="Get two years history",
+     *      description="Get two years history",
+     *      @OA\Parameter(
+     *          name="currentCurrency",
+     *          description="Current currency",
+     *          required=false,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="currentCurrency",
+     *          description="Against currency",
+     *          required=false,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+    *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(
+     *          response=422, 
+     *          description="Bad currency"
+     *      ),
+     *     )
+     *
+     *
+     */
     public function getLastTwoYearsData()
     {
         $today = Carbon::now()->format('Y-m-d');
@@ -221,6 +273,53 @@ class CurrencyService
         return $data;
     }
 
+    /**
+     * @OA\Get(
+     *      path="/api/get-currencies-by-date-range",
+     *      summary="Get currencies by date range",
+     *      description="Get currencies by date range",
+     *      @OA\Parameter(
+     *          name="currentCurrency",
+     *          description="Current currency",
+     *          required=false,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="againstCurrency",
+     *          description="against currency",
+     *          required=false,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="startPeriod",
+     *          description="start period date",
+     *          required=false,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="date"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="endPeriod",
+     *          description="end period date",
+     *          required=false,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="date"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *      )
+     * )
+     */
     public function getCurrenciesDataByDateRange()
     {
         $url = $this->apiUrl . '/data/EXR/' . $this->currenciesUrl . $this->getApiParams();

@@ -122,12 +122,12 @@
             'dev_requirement' => true,
         ),
         'facade/ignition' => array(
-            'pretty_version' => '2.16.0',
-            'version' => '2.16.0.0',
+            'pretty_version' => '2.16.1',
+            'version' => '2.16.1.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../facade/ignition',
             'aliases' => array(),
-            'reference' => '23400e6cc565c9dcae2c53704b4de1c4870c0697',
+            'reference' => '29b533f63a3b269aa599d08dd4d22a0d720e295f',
             'dev_requirement' => true,
         ),
         'facade/ignition-contracts' => array(
